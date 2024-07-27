@@ -1,15 +1,20 @@
+'use client';
 import { FC } from 'react';
 import { Title } from './title';
 import { FilterCheckbox } from './FilterCheckox';
 import { Input } from '../ui';
 import { RangeSlider } from './RangeSlider';
 import { CheckboxFiltersGroup } from './CheckboxFiltersGroup';
+import { useFilterIngredients } from '../../../hooks/useFilterIngredients';
 
 interface FiltersProps {
   className?: string;
 }
 
 export const Filters: FC<FiltersProps> = ({ className }) => {
+  const { ingredients, loading } = useFilterIngredients();
+
+  const items = ingredients.map((i) => ({ text: i.name, value: String(i.id) }));
   return (
     <div className={className}>
       <Title text='Фиьтрация' size={'sm'} className='mb-5 font-bold' />
@@ -29,121 +34,7 @@ export const Filters: FC<FiltersProps> = ({ className }) => {
         <RangeSlider min={0} max={1000} step={10} value={[0, 1000]} />
       </div>
 
-      <CheckboxFiltersGroup
-        className='mt-5'
-        limit={6}
-        defaultItems={[
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-        ]}
-        items={[
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-
-          {
-            text: 'text',
-            value: '13',
-          },
-          {
-            text: 'text2',
-            value: '12',
-          },
-        ]}
-        title='Ингридиенты'
-      />
+      <CheckboxFiltersGroup loading={loading} className='mt-5' limit={6} defaultItems={items.slice(0, 6)} items={items} title='Ингридиенты' />
     </div>
   );
 };

@@ -3,7 +3,7 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { FilterChecboxProps, FilterCheckbox } from './FilterCheckox';
 import { Title } from './title';
-import { Input } from '../ui';
+import { Input, Skeleton } from '../ui';
 
 type Item = FilterChecboxProps;
 
@@ -39,6 +39,16 @@ export const CheckboxFiltersGroup: FC<CheckboxFiltersGroupProps> = ({
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+
+  if (loading) {
+    return (
+      <div className={className}>
+        <p className='font-bold mb-3'>{title}</p>
+
+        {...Array(limit).fill(0).map((_, i) => <Skeleton key={i} className='mb-4 h-6' />)}
+      </div>
+    );
+  }
 
   const list = showAll ? items.filter((i) => i.text.toLowerCase().includes(searchValue.toLowerCase())) : defaultItems?.slice(0, limit);
 
